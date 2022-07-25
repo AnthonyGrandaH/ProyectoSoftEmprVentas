@@ -5,13 +5,12 @@
         <h1>Bienvenido, {{Auth::user()->name}}</h1>
     </div>
     @foreach([
-    ["productos", "ventas", "vender", "clientes"],
-    ["usuarios"]
+    ["productos", "ventas", "vender", "clientes", "usuarios"]  
     ] as $modulos)
         <div class="col-12 pb-2">
             <div class="row">
                 @foreach($modulos as $modulo)
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-2">
                         <div class="card">
                             <img class="card-img-top" src="{{url("/img/$modulo.png")}}">
                             <div class="card-body">

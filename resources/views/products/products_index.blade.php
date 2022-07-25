@@ -2,7 +2,7 @@
 @section("titulo", "Productos")
 @section("contenido")
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <h1>Productos <i class="fa fa-box"></i></h1>
         @include("notificacion")
         <div class="row">
