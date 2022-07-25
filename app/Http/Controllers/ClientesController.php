@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use PDO;
+use PDOException;
+
+$opciones = [PDO::ERRMODE_EXCEPTION];
+
 
 class ClientesController extends Controller
 {
@@ -35,8 +40,25 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        (new Cliente($request->input()))->saveOrFail();
-        return redirect()->route("clientes.index")->with("mensaje", "Cliente agregado");
+        try {
+
+            (new Cliente($request->input()))->saveOrFail();
+
+            $request->validate([
+                'nombre' => 'required|regex:/^[A-Z,a-z, ,á,í,é,ó,ú,ñ]+$/|max:50',
+                'cedula' => 'nullable|min:10|max:10|regex:/^[E,0-9,-]+$/|unique:clientes',
+                'telefono' => 'nullable|min:10|max:10|regex:/^[0-9]{7,8}$/|unique:clientes',
+                'email' => 'nullable|email|max:100|unique:clientes',
+
+            ]);
+
+            return redirect()->route("clientes.index")->with("mensaje", "Cliente agregado");
+        } catch (PDOException $ex) {
+            return redirect()->route("clientes.index")->with([
+                "mensaje" => "El cliente no fue registrado porque ya existe",
+                "tipo" => "danger"
+            ]);;
+        }
     }
 
     /**
