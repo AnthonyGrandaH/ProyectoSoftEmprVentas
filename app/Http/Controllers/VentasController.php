@@ -81,15 +81,17 @@ class VentasController extends Controller
 
     public function detalle(Venta $venta)
     {
+
+
         $total = 0;
         foreach ($venta->productos as $producto) {
             $total += $producto->cantidad * $producto->precio;
         }
-        return view("ventas.detalle", [
+
+        $pdf = PDF::loadView("ventas.detalle", [
             "venta" => $venta,
             "total" => $total,
         ]);
-        $pdf = PDF::loadView('ventas.detalle',["ventas" => $total,]);
         //$pdf->loadHTML('<h1>Test</h1>');
        return $pdf->stream();
     }

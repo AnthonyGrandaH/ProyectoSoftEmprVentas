@@ -28,7 +28,7 @@ Route::get("/logout", function () {
 
 
 Route::get('ventas/pdf', [App\Http\Controllers\VentasController::class,"pdf"])->name('ventas.pdf');
-Route::get('ventas/detalle', [App\Http\Controllers\VentasController::class,"detalle"])->name('ventas.detalle');
+Route::get('ventas/detalle/{venta}', [App\Http\Controllers\VentasController::class,"detalle"])->name('ventas.detalle');
 
 Route::middleware("auth")
     ->group(function () {
